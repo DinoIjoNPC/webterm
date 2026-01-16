@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebTerm - Terminal Web Termux-like</title>
+    <title>WebTerm v1.0 - Terminal Web</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖥️</text></svg>">
@@ -40,177 +40,258 @@
             </div>
         </header>
 
-        <!-- Terminal Container -->
-        <main class="terminal-container">
-            <!-- Terminal Header -->
-            <div class="terminal-header">
-                <div class="terminal-title">
-                    <i class="fas fa-code"></i>
-                    <span>Terminal Web</span>
-                </div>
-                <div class="terminal-controls">
-                    <div class="control-btn minimize">
-                        <i class="fas fa-minus"></i>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Terminal Container -->
+            <main class="terminal-container">
+                <!-- Terminal Header -->
+                <div class="terminal-header">
+                    <div class="terminal-title">
+                        <i class="fas fa-code"></i>
+                        <span>Terminal Web</span>
                     </div>
-                    <div class="control-btn maximize">
-                        <i class="fas fa-square"></i>
-                    </div>
-                    <div class="control-btn close">
-                        <i class="fas fa-times"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Terminal Content -->
-            <div class="terminal-content" id="terminal">
-                <!-- Output akan ditampilkan di sini -->
-                <div class="output" id="output">
-                    <div class="welcome-message">
-                        <pre class="ascii-art">
-  ██████  ███████ ██████  ████████ ███████ ██████  ███    ███ 
- ██       ██      ██   ██    ██    ██      ██   ██ ████  ████ 
- ██   ███ █████   ██████     ██    █████   ██████  ██ ████ ██ 
- ██    ██ ██      ██   ██    ██    ██      ██   ██ ██  ██  ██ 
-  ██████  ███████ ██   ██    ██    ███████ ██   ██ ██      ██ 
-                        </pre>
-                        <div class="welcome-text">
-                            <p>🌟 <strong>WebTerm - Terminal Web Multi-Device</strong></p>
-                            <p>📱 <em>Terinspirasi dari Termux, berjalan di semua sistem</em></p>
-                            <p>🔧 Versi 1.0 | Sistem: Web-based | Status: <span class="status-text">Aktif</span></p>
-                            <p>📝 Ketik <code>help</code> untuk melihat daftar perintah</p>
-                            <p>🚀 Ketik <code>start</code> untuk memulai tools</p>
+                    <div class="terminal-controls">
+                        <div class="control-btn minimize" title="Minimize">
+                            <i class="fas fa-minus"></i>
+                        </div>
+                        <div class="control-btn maximize" title="Maximize">
+                            <i class="fas fa-square"></i>
+                        </div>
+                        <div class="control-btn close" title="Close">
+                            <i class="fas fa-times"></i>
                         </div>
                     </div>
-                    <div class="command-history"></div>
                 </div>
 
-                <!-- Input Area -->
-                <div class="input-area">
-                    <div class="prompt">
-                        <span class="user">user</span>
-                        <span class="at">@</span>
-                        <span class="host">webterm</span>
-                        <span class="path">:~$</span>
+                <!-- Terminal Content -->
+                <div class="terminal-content" id="terminal">
+                    <!-- Output Area -->
+                    <div class="output" id="output">
+                        <div class="welcome-message">
+                            <div class="welcome-text">
+                                <p class="welcome-title">WebTerm - Terminal Web Multi-Device</p>
+                                <p class="welcome-subtitle">Terinspirasi dari Termux, berjalan di semua sistem</p>
+                                <div class="welcome-info">
+                                    <span>Versi 1.0</span> | 
+                                    <span>Sistem: Web-based</span> | 
+                                    <span>Status: <span class="status-text">Aktif</span></span>
+                                </div>
+                                <div class="welcome-instructions">
+                                    <p>📝 Ketik <code>help</code> untuk melihat daftar perintah</p>
+                                    <p>🚀 Ketik <code>start</code> untuk memulai tools</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="command-history" id="command-history"></div>
                     </div>
-                    <div class="input-container">
-                        <input 
-                            type="text" 
-                            id="command-input" 
-                            class="command-input" 
-                            autocomplete="off"
-                            autocorrect="off"
-                            autocapitalize="off"
-                            spellcheck="false"
-                            placeholder="Ketik perintah di sini..."
-                            autofocus
-                        >
-                        <div class="input-suggestions" id="suggestions"></div>
+
+                    <!-- Input Area -->
+                    <div class="input-area">
+                        <div class="prompt">
+                            <span class="user">user</span>
+                            <span class="at">@</span>
+                            <span class="host">webterm</span>
+                            <span class="path">:~$</span>
+                        </div>
+                        <div class="input-container">
+                            <input 
+                                type="text" 
+                                id="command-input" 
+                                class="command-input" 
+                                autocomplete="off"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false"
+                                placeholder="Ketik perintah di sini..."
+                                autofocus
+                            >
+                            <div class="input-suggestions" id="suggestions"></div>
+                        </div>
+                        <button id="execute-btn" class="btn-execute" title="Jalankan perintah (Enter)">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button id="clear-btn" class="btn-clear" title="Clear terminal">
+                            <i class="fas fa-broom"></i>
+                        </button>
                     </div>
-                    <button id="execute-btn" class="btn-execute" title="Jalankan perintah">
-                        <i class="fas fa-play"></i>
+                </div>
+
+                <!-- Terminal Footer -->
+                <div class="terminal-footer">
+                    <div class="footer-left">
+                        <div class="quick-commands">
+                            <span class="footer-label">Quick Commands:</span>
+                            <button class="quick-btn" data-cmd="help">help</button>
+                            <button class="quick-btn" data-cmd="tools">tools</button>
+                            <button class="quick-btn" data-cmd="clear">clear</button>
+                            <button class="quick-btn" data-cmd="date">date</button>
+                            <button class="quick-btn" data-cmd="ls">ls</button>
+                            <button class="quick-btn" data-cmd="ipinfo">ipinfo</button>
+                        </div>
+                    </div>
+                    <div class="footer-right">
+                        <div class="system-stats">
+                            <span class="stat">
+                                <i class="fas fa-microchip"></i> 
+                                <span id="cpu-usage">0%</span>
+                            </span>
+                            <span class="stat">
+                                <i class="fas fa-memory"></i> 
+                                <span id="memory-usage">0MB</span>
+                            </span>
+                            <span class="stat">
+                                <i class="fas fa-bolt"></i> 
+                                <span id="battery">100%</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Sidebar Tools -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-tools"></i> Tools & Utilitas</h3>
+                    <button id="sidebar-toggle" class="btn-icon" title="Toggle sidebar">
+                        <i class="fas fa-chevron-left"></i>
                     </button>
                 </div>
-            </div>
+                <div class="sidebar-content">
+                    <!-- Network Tools -->
+                    <div class="tool-category">
+                        <h4><i class="fas fa-network-wired"></i> Network Tools</h4>
+                        <div class="tool-list">
+                            <button class="tool-btn" data-tool="ping" title="Ping test">
+                                <i class="fas fa-satellite-dish"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Ping Test</span>
+                                    <span class="tool-desc">Test koneksi jaringan</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="ipinfo" title="Informasi IP">
+                                <i class="fas fa-globe"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">IP Info</span>
+                                    <span class="tool-desc">Informasi alamat IP</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="speedtest" title="Speed test">
+                                <i class="fas fa-tachometer-alt"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Speed Test</span>
+                                    <span class="tool-desc">Test kecepatan internet</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="portscan" title="Port scanner">
+                                <i class="fas fa-search"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Port Scanner</span>
+                                    <span class="tool-desc">Scan port terbuka</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
 
-            <!-- Terminal Footer -->
-            <div class="terminal-footer">
-                <div class="footer-left">
-                    <div class="quick-commands">
-                        <span class="footer-label">Quick Commands:</span>
-                        <button class="quick-btn" data-cmd="help">help</button>
-                        <button class="quick-btn" data-cmd="tools">tools</button>
-                        <button class="quick-btn" data-cmd="clear">clear</button>
-                        <button class="quick-btn" data-cmd="date">date</button>
+                    <!-- Developer Tools -->
+                    <div class="tool-category">
+                        <h4><i class="fas fa-code"></i> Developer Tools</h4>
+                        <div class="tool-list">
+                            <button class="tool-btn" data-tool="qrcode" title="QR code generator">
+                                <i class="fas fa-qrcode"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">QR Generator</span>
+                                    <span class="tool-desc">Buat QR code</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="base64" title="Base64 encode/decode">
+                                <i class="fas fa-key"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Base64</span>
+                                    <span class="tool-desc">Encode/Decode Base64</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="hash" title="Hash generator">
+                                <i class="fas fa-fingerprint"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Hash Generator</span>
+                                    <span class="tool-desc">Generate hash MD5/SHA</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="json" title="JSON formatter">
+                                <i class="fas fa-code"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">JSON Formatter</span>
+                                    <span class="tool-desc">Format JSON data</span>
+                                </div>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="footer-right">
-                    <div class="system-stats">
-                        <span class="stat"><i class="fas fa-microchip"></i> <span id="cpu-usage">0%</span></span>
-                        <span class="stat"><i class="fas fa-memory"></i> <span id="memory-usage">0MB</span></span>
-                        <span class="stat"><i class="fas fa-bolt"></i> <span id="battery">100%</span></span>
-                    </div>
-                </div>
-            </div>
-        </main>
 
-        <!-- Sidebar Tools -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h3><i class="fas fa-tools"></i> Tools & Utilitas</h3>
-                <button id="sidebar-toggle" class="btn-icon">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-            </div>
-            <div class="sidebar-content">
-                <div class="tool-category">
-                    <h4><i class="fas fa-network-wired"></i> Network Tools</h4>
-                    <div class="tool-list">
-                        <button class="tool-btn" data-tool="ping">
-                            <i class="fas fa-satellite-dish"></i>
-                            <span>Ping Test</span>
-                        </button>
-                        <button class="tool-btn" data-tool="ipinfo">
-                            <i class="fas fa-globe"></i>
-                            <span>IP Info</span>
-                        </button>
-                        <button class="tool-btn" data-tool="speedtest">
-                            <i class="fas fa-tachometer-alt"></i>
-                            <span>Speed Test</span>
-                        </button>
+                    <!-- Utilities -->
+                    <div class="tool-category">
+                        <h4><i class="fas fa-calculator"></i> Utilities</h4>
+                        <div class="tool-list">
+                            <button class="tool-btn" data-tool="calculator" title="Calculator">
+                                <i class="fas fa-calculator"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Calculator</span>
+                                    <span class="tool-desc">Kalkulator ilmiah</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="notes" title="Notes">
+                                <i class="fas fa-sticky-note"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Notes</span>
+                                    <span class="tool-desc">Catatan sederhana</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="converter" title="Unit converter">
+                                <i class="fas fa-exchange-alt"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Unit Converter</span>
+                                    <span class="tool-desc">Konversi satuan</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="password" title="Password generator">
+                                <i class="fas fa-lock"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Password Generator</span>
+                                    <span class="tool-desc">Generate password aman</span>
+                                </div>
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="tool-category">
-                    <h4><i class="fas fa-code"></i> Developer Tools</h4>
-                    <div class="tool-list">
-                        <button class="tool-btn" data-tool="qrcode">
-                            <i class="fas fa-qrcode"></i>
-                            <span>QR Generator</span>
-                        </button>
-                        <button class="tool-btn" data-tool="base64">
-                            <i class="fas fa-key"></i>
-                            <span>Base64 Encode/Decode</span>
-                        </button>
-                        <button class="tool-btn" data-tool="hash">
-                            <i class="fas fa-fingerprint"></i>
-                            <span>Hash Generator</span>
-                        </button>
+                    <!-- System Tools -->
+                    <div class="tool-category">
+                        <h4><i class="fas fa-cogs"></i> System Tools</h4>
+                        <div class="tool-list">
+                            <button class="tool-btn" data-tool="process" title="Process monitor">
+                                <i class="fas fa-tasks"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Process Monitor</span>
+                                    <span class="tool-desc">Monitor proses sistem</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="storage" title="Storage analyzer">
+                                <i class="fas fa-hdd"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Storage Analyzer</span>
+                                    <span class="tool-desc">Analisis penggunaan storage</span>
+                                </div>
+                            </button>
+                            <button class="tool-btn" data-tool="network" title="Network monitor">
+                                <i class="fas fa-wifi"></i>
+                                <div class="tool-btn-content">
+                                    <span class="tool-name">Network Monitor</span>
+                                    <span class="tool-desc">Monitor koneksi jaringan</span>
+                                </div>
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-                <div class="tool-category">
-                    <h4><i class="fas fa-calculator"></i> Utilities</h4>
-                    <div class="tool-list">
-                        <button class="tool-btn" data-tool="calculator">
-                            <i class="fas fa-calculator"></i>
-                            <span>Calculator</span>
-                        </button>
-                        <button class="tool-btn" data-tool="notes">
-                            <i class="fas fa-sticky-note"></i>
-                            <span>Notes</span>
-                        </button>
-                        <button class="tool-btn" data-tool="converter">
-                            <i class="fas fa-exchange-alt"></i>
-                            <span>Unit Converter</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="tool-category">
-                    <h4><i class="fas fa-gamepad"></i> Games</h4>
-                    <div class="tool-list">
-                        <button class="tool-btn" data-tool="snake">
-                            <i class="fas fa-gamepad"></i>
-                            <span>Snake Game</span>
-                        </button>
-                        <button class="tool-btn" data-tool="2048">
-                            <i class="fas fa-th"></i>
-                            <span>2048 Game</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </aside>
+            </aside>
+        </div>
 
         <!-- Notifications -->
         <div class="notification-container" id="notification-container"></div>
@@ -220,9 +301,12 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 id="modal-title">Tool</h3>
-                    <button class="modal-close">&times;</button>
+                    <button class="modal-close" id="modal-close">&times;</button>
                 </div>
                 <div class="modal-body" id="modal-body"></div>
+                <div class="modal-footer">
+                    <button id="modal-close-btn" class="btn-modal-close">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -232,4 +316,4 @@
     <script src="tools.js"></script>
     <script src="script.js"></script>
 </body>
-  </html>
+                            </html>
